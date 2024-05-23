@@ -1,5 +1,5 @@
 pipeline {
-  agent any 
+  agent { label 'flyway' } 
   environment {
     DB_CREDS=credentials('db-creds')
   }
@@ -8,6 +8,7 @@ pipeline {
       steps {
          sh 'docker run --rm flyway/flyway:10.13.0 version'
          sh 'echo $WORKSPACE'
+         sh 'pwd'
       }
     }
     stage('migrate') {
