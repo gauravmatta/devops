@@ -23,7 +23,7 @@ pipeline {
     }
     stage('info') {
       steps {
-        sh 'docker run --rm --network=host -v $WORKSPACE/jenkins_flyway/sql:/flyway/sql -v $WORKSPACE/conf:/jenkins_flyway/conf flyway/flyway:10.13.0 info'
+        sh 'docker run --rm --network=host -v $WORKSPACE/jenkins_flyway/sql:/flyway/sql -v $WORKSPACE/jenkins_flyway/conf:/flyway/conf flyway/flyway:10.13.0 info'
       }
     }
   }
