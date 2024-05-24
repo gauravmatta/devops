@@ -4,6 +4,11 @@ pipeline {
     DB_CREDS=credentials('db-creds')
   }
   stages {
+    stage('Install') {
+      steps {
+       sh 'docker build -t flyway-postgres'
+      }
+    }
     stage('Verify version') {
       steps {
          sh 'docker run --rm flyway/flyway:10.13.0 version'
