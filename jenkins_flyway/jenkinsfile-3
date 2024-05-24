@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'flyway' } 
+  agent any
   environment {
     DB_CREDS=credentials('db-creds')
   }
