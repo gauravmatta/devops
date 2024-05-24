@@ -1,0 +1,20 @@
+pipeline {
+  agent any
+  environment {
+    DB_CREDS=credentials('db-creds')
+  }
+  stages {
+    stage('Verify version') {
+      steps {
+         sh 'docker run --rm flyway/flyway:8.5.1 version'
+         sh 'echo $WORKSPACE'
+         sh 'pwd'
+      }
+    }
+    stage('migrate') {
+      steps {
+        sh 'docker run --rm -v $WORKSPACE/jenkins_flyway/sql:/flyway/sql -v $WORKSPACE/jenkins_flyway/conf:/flyway/conf flyway/flyway:8.5.1 -user=$DB_CREDS_USR -password=$DB_CREDS_PSW migrate'
+      }
+    }
+  }
+}
