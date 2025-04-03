@@ -1,0 +1,14 @@
+FROM registry.access.redhat.com/ubi9/ubi
+WORKDIR /tmp/hello-server
+COPY . .
+# COPY . /tmp/hello-server
+# RUN dnf module enable -y nodejs:18
+# RUN dnf install -y nodejs
+# RUN npm install
+# RUN dnf module enable -y nodejs:18 && dnf install -y nodejs && npm install
+RUN dnf module enable -y nodejs:18 && \
+dnf install -y nodejs && \
+npm install
+CMD npm start
+# RUN cd /tmp/hello-server && npm install
+# CMD cd /tmp/hello-server && npm start
