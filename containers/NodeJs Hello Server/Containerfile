@@ -1,14 +1,42 @@
-FROM registry.access.redhat.com/ubi9/ubi
-WORKDIR /tmp/hello-server
+# ==========Try to use base image with basic sdk's installed======
+# FROM registry.access.redhat.com/ubi9/ubi
+# ==========Try to use base image with basic sdk's installed======
+
+FROM registry.access.redhat.com/ubi9/nodejs-18-minimal
+LABEL org.opencontainers.image.authors="Kubernetes Implant"
+LABEL com.example.environment="production"
+LABEL com.example.version="0.0.1"
+ENV SERVER_PORT=3000
+ENV NODE_ENV="production"
+EXPOSE $SERVER_PORT
+
+# ======================Temp is not a good working directory for code============
+# WORKDIR /tmp/hello-server
+# ======================Temp is not a good working directory for code============
+
+WORKDIR /opt/app-root/src
 COPY . .
+
+# =========Use WORKDIR instead of switching directory in code======
 # COPY . /tmp/hello-server
+# =========Use WORKDIR instead of switching directory in code======
+
+# =========Adding Multiple RUN increses layers which is not a good practice======
 # RUN dnf module enable -y nodejs:18
 # RUN dnf install -y nodejs
 # RUN npm install
+# =========Adding Multiple RUN increses layers which is not a good practice======
+
+# ======We don't need as now er are directly using nodejs 18-minimal image====
 # RUN dnf module enable -y nodejs:18 && dnf install -y nodejs && npm install
-RUN dnf module enable -y nodejs:18 && \
-dnf install -y nodejs && \
-npm install
-CMD npm start
+# RUN dnf module enable -y nodejs:18 && \
+# dnf install -y nodejs && \
+# ======We don't need as now er are directly using nodejs 18-minimal image====
+
+# =========Use WORKDIR instead of switching directory in code======
 # RUN cd /tmp/hello-server && npm install
 # CMD cd /tmp/hello-server && npm start
+# =========Use WORKDIR instead of switching directory in code======
+
+RUN npm install
+CMD npm start
