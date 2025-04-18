@@ -1,0 +1,11 @@
+# First stage
+FROM quay.io/redhattraining/podman-random-numbers as generator
+RUN python3 random_generator.py && cat /app/numbers.txt
+# Second stage
+FROM registry.access.redhat.com/ubi8/python-311
+ENV FILE="/redhat/materials/numbers.txt"
+USER default
+WORKDIR /redhat
+COPY --from=generator --chown=default /app/numbers.txt materials/numbers.txt
+# COPY main.py .
+# CMD python3 main.py

@@ -1,0 +1,3 @@
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+ENTRYPOINT ["echo", "Hello"]
+CMD ["Red", "Hat"]

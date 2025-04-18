@@ -1,0 +1,8 @@
+# First stage
+FROM registry.access.redhat.com/ubi8/nodejs-14:1 as builder
+COPY ./ /opt/app-root/src/
+RUN npm install
+RUN npm run build
+# Second stage
+FROM registry.access.redhat.com/ubi8/nginx-120
+COPY --from=builder /opt/app-root/src/ /usr/share/nginx/html
